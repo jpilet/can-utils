@@ -108,7 +108,6 @@ AC_SUBST(linux_CFLAGS)
 AC_CHECK_HEADERS([ \
 	linux/can/gw.h \
 	linux/can/isotp.h \
-	linux/can/j1939.h \
 	],[],[],
 [
 #ifdef HAVE_SYS_SOCKET_H
@@ -118,7 +117,15 @@ AC_CHECK_HEADERS([ \
 
 AM_CONDITIONAL(CONFIG_GW, [test "${ac_cv_header_linux_can_gw_h}" = "yes"])
 AM_CONDITIONAL(CONFIG_ISOTP, [test "${ac_cv_header_linux_can_isotp_h}" = "yes"])
-AM_CONDITIONAL(CONFIG_J1939, [test "${ac_cv_header_linux_can_j1939_h}" = "yes"])
+
+AC_CHECK_HEADERS([linux/can/j1939.h],
+		AC_MSG_NOTICE([building SAE J1939 utils]),
+		AC_MSG_WARN([NOT building SAE J1939 utils]),
+[
+#ifdef HAVE_SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
+])
 
 AC_CHECK_DECL(SO_RXQ_OVFL,,
     [AC_DEFINE([SO_RXQ_OVFL], [40], [SO_RXQ_OVFL])]
