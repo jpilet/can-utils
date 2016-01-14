@@ -43,11 +43,12 @@ PREFIX = /usr/local
 
 MAKEFLAGS = -k
 
+LDFLAGS=-m32
 CFLAGS    = -O2 -Wall -Wno-parentheses -Iinclude \
 	    -fno-strict-aliasing \
 	    -DSO_RXQ_OVFL=40 \
 	    -DPF_CAN=29 \
-	    -DAF_CAN=PF_CAN
+	    -DAF_CAN=PF_CAN -m32
 
 PROGRAMS_ISOTP = isotpdump isotprecv isotpsend isotpsniffer isotptun isotpserver
 PROGRAMS_CANGW = cangw
